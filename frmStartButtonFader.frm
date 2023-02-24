@@ -156,7 +156,7 @@ Private Function IHookSink_WindowProc(hWnd As Long, iMsg As Long, wParam As Long
     Else
          ' Just allow default processing for everything else.
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
     End If
     
     Exit Function
@@ -165,7 +165,7 @@ Handler:
     
     ' Just allow default processing for everything else.
     IHookSink_WindowProc = _
-        InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+        CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
 End Function
 
 Sub FadeIn()

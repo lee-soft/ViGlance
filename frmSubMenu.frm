@@ -1095,7 +1095,7 @@ Private Function IHookSink_WindowProc(hWnd As Long, iMsg As Long, wParam As Long
         RaiseEvent onMouseOut
     ElseIf iMsg = WM_MOUSEMOVE Then
     
-        MouseMove MouseButtonState(wParam), ShiftState(wParam), LoWord(lParam), HiWord(lParam)
+        MouseMove MouseButtonState(wParam), ShiftState(wParam), LOWORD(lParam), HiWord(lParam)
         
     ElseIf iMsg = WM_ACTIVATE Then
         
@@ -1109,11 +1109,11 @@ Private Function IHookSink_WindowProc(hWnd As Long, iMsg As Long, wParam As Long
         
          ' Just allow default processing for everything else.
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
     Else
          ' Just allow default processing for everything else.
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
     End If
 
     Exit Function
@@ -1122,7 +1122,7 @@ Handler:
     
     ' Just allow default processing for everything else.
     IHookSink_WindowProc = _
-        InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+        CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
 End Function
 
 Sub ReTrackMouse()

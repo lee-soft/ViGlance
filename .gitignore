@@ -1,0 +1,12 @@
+.DS_Store
+.Trashes
+*.vbw
+*.csi
+*.exp
+*.lib
+*.lvw
+*.dca
+*.scc
+*.tmp
+ViGlance.exe
+*.db

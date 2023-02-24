@@ -11,7 +11,7 @@ Option Explicit
 
 Public Declare Function CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Dest As Any, Src As Any, ByVal cb As Long) As Long
 
-Public Declare Sub DragAcceptFiles Lib "shell32" (ByVal hWnd As Long, ByVal _
+Public Declare Sub DragAcceptFiles Lib "shell32" (ByVal hwnd As Long, ByVal _
     bool As Integer)
 Public Declare Function DragQueryFileW Lib "shell32" (ByVal wParam As Long, _
     ByVal index As Long, ByVal lpszFile As Long, ByVal BufferSize As Long) _
@@ -21,15 +21,15 @@ Public Declare Sub DragFinish Lib "shell32" (ByVal hDrop As Integer)
 Public Declare Function Wow64DisableWow64FsRedirection Lib "kernel32.dll" (ByRef oldValue As Long) As Long
 Public Declare Function Wow64RevertWow64FsRedirection Lib "kernel32.dll" (ByRef oldValue As Long) As Long
 
-Public Declare Function PrintWindow Lib "user32.dll" (ByVal hWnd As Long, ByVal hdcBlt As Long, ByVal nFlags As Long) As Long
-Public Declare Function UpdateLayeredWindow Lib "user32.dll" (ByVal hWnd As Long, ByVal hdcDst As Long, pptDst As Any, PSIZE As Any, ByVal hdcSrc As Long, pptSrc As Any, ByVal crKey As Long, ByRef pblend As BLENDFUNCTION, ByVal dwFlags As Long) As Long
+Public Declare Function PrintWindow Lib "user32.dll" (ByVal hwnd As Long, ByVal hdcBlt As Long, ByVal nFlags As Long) As Long
+Public Declare Function UpdateLayeredWindow Lib "user32.dll" (ByVal hwnd As Long, ByVal hdcDst As Long, pptDst As Any, PSIZE As Any, ByVal hdcSrc As Long, pptSrc As Any, ByVal crKey As Long, ByRef pblend As BLENDFUNCTION, ByVal dwFlags As Long) As Long
 Public Declare Function TrackMouseEvent Lib "user32" (lpEventTrack As TrackMouseEvent) As Long
 
-Public Declare Function RegisterShellHookWindow Lib "user32" (ByVal hWnd As Long) As Long
-Public Declare Function GetTopWindow Lib "user32.dll" (ByVal hWnd As Long) As Long
-Public Declare Function GetNextWindow Lib "user32.dll" Alias "GetWindow" (ByVal hWnd As Long, ByVal wFlag As Long) As Long
+Public Declare Function RegisterShellHookWindow Lib "user32" (ByVal hwnd As Long) As Long
+Public Declare Function GetTopWindow Lib "user32.dll" (ByVal hwnd As Long) As Long
+Public Declare Function GetNextWindow Lib "user32.dll" Alias "GetWindow" (ByVal hwnd As Long, ByVal wFlag As Long) As Long
 Public Declare Function SHAppBarMessage Lib "shell32.dll" (ByVal dwMessage As Long, ByRef pData As APPBARDATA) As Long
-Public Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hWnd As Long, ByVal crey As Byte, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
+Public Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As Long, ByVal crey As Byte, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
 Public Declare Function DeleteObject Lib "gdi32.dll" (ByVal hObject As Long) As Long
 Public Declare Function SetMenuDefaultItem Lib "user32.dll" (ByVal hMenu As Long, ByVal uItem As Long, ByVal fByPos As Long) As Long
 Public Declare Function GetLastError Lib "kernel32.dll" () As Long
@@ -43,7 +43,7 @@ Public Declare Function WriteFile Lib "kernel32.dll" (ByVal iFileHandle As Long,
 Private Type SHELLEXECUTEINFOW
     cbSize As Long
     fMask As Long
-    hWnd As Long
+    hwnd As Long
     lpVerb As Long
     lpFile As Long
     lpParameters As Long
@@ -132,7 +132,7 @@ Private Const INPUT_KEYBOARD = 1
 ' API Defined Types
 Public Type APPBARDATA
     cbSize As Long
-    hWnd As Long
+    hwnd As Long
     uCallbackMessage As Long
     uEdge As Long
     rc As RECT
@@ -410,17 +410,17 @@ End Function
 
 Public Function GetZOrder(ByVal hWndTarget As Long) As Long
     
-Dim hWnd As Long
+Dim hwnd As Long
 Dim lngZOrder As Long
 
     ' Loop through window list and
     ' compare to hWnd to hwndTarget, to find global ZOrder
-    hWnd = GetTopWindow(0)
+    hwnd = GetTopWindow(0)
     lngZOrder = 0
     
-    Do While hWnd And hWnd <> hWndTarget
+    Do While hwnd And hwnd <> hWndTarget
        ' Get next window and move on.
-        hWnd = GetNextWindow(hWnd, _
+        hwnd = GetNextWindow(hwnd, _
           GW_HWNDNEXT)
         lngZOrder = lngZOrder + 1
         

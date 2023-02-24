@@ -946,7 +946,7 @@ Dim theWindow As Window
     If hWnd <> Me.hWnd Then
          ' Just allow default processing for everything else.
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
         Exit Function
     End If
 
@@ -965,7 +965,7 @@ Dim theWindow As Window
         
         'Allow VB to process it
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
             
     ElseIf iMsg = WM_DROPFILES Then
     
@@ -988,20 +988,20 @@ Dim theWindow As Window
         DragFinish hFilesInfo
             
     ElseIf iMsg = WM_LBUTTONUP Then
-        MouseEvent vbLeftButton, LoWord(lParam), HiWord(lParam)
+        MouseEvent vbLeftButton, LOWORD(lParam), HiWord(lParam)
          'Allow DefWndProc to Handle also
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
         
     ElseIf iMsg = WM_RBUTTONUP Then
-        MouseEvent vbRightButton, LoWord(lParam), HiWord(lParam)
+        MouseEvent vbRightButton, LOWORD(lParam), HiWord(lParam)
          'Allow DefWndProc to Handle also
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
     
     ElseIf iMsg = WM_MOUSEMOVE Then
 
-        MouseMove MouseButtonState(wParam), ShiftState(wParam), LoWord(lParam), HiWord(lParam)
+        MouseMove MouseButtonState(wParam), ShiftState(wParam), LOWORD(lParam), HiWord(lParam)
         
     ElseIf iMsg = WM_ACTIVATE Then
     
@@ -1020,7 +1020,7 @@ Dim theWindow As Window
         
          'Allow DefWndProc to Handle also
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
 
     ElseIf iMsg = WM_MOUSELEAVE Then
         m_ignoreMouseMove = False
@@ -1129,7 +1129,7 @@ Dim theWindow As Window
     Else
          ' Just allow default processing for everything else.
          IHookSink_WindowProc = _
-            InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+            CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
     End If
 
     Exit Function
@@ -1138,7 +1138,7 @@ Handler:
 
     ' Just allow VB to process it
     IHookSink_WindowProc = _
-       InvokeWindowProc(hWnd, iMsg, wParam, lParam)
+       CallOldWindowProcessor(hWnd, iMsg, wParam, lParam)
 End Function
 
 Function UpdateThumbnail(ByRef cWnd As Window) As Boolean
