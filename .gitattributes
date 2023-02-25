@@ -8,6 +8,7 @@
 *.vbw text eol=crlf
 *.dsr text eol=crlf
 *.ini text eol=crlf
+*.png binary
 *.res binary
 *.RES binary
 *.frx binary
